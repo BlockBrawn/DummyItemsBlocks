@@ -559,10 +559,6 @@ final class Main extends PluginBase
         if (Utils::removeIfPresent(BlockTypeNames::STRUCTURE_BLOCK, $blocks)) {
             BlockStateRegistration::StructureBlock();
         }
-        // structure_void STRUCTURE_VOID_TYPE string
-        if (Utils::removeIfPresent(BlockTypeNames::STRUCTURE_VOID, $blocks)) {
-            BlockStateRegistration::StructureVoid();
-        }
         // suspicious_gravel suspicious_sand BRUSHED_PROGRESS 0 HANGING T/F
         foreach ([BlockTypeNames::SUSPICIOUS_GRAVEL, BlockTypeNames::SUSPICIOUS_SAND] as $id) {
             if (Utils::removeIfPresent($id, $blocks)) {

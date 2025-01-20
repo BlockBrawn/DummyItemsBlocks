@@ -49,3 +49,8 @@ Temporary Items
 # Common IDEs
 .idea/
 nbproject/*
+
+/composer.lock
+/*.phar
+
+/vendor

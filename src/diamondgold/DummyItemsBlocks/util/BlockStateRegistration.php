@@ -22,7 +22,6 @@ use diamondgold\DummyItemsBlocks\block\enum\FacingDirection;
 use diamondgold\DummyItemsBlocks\block\enum\Orientation;
 use diamondgold\DummyItemsBlocks\block\enum\SeaGrassType;
 use diamondgold\DummyItemsBlocks\block\enum\StructureBlockType;
-use diamondgold\DummyItemsBlocks\block\enum\StructureVoidType;
 use diamondgold\DummyItemsBlocks\block\enum\TurtleEggCount;
 use diamondgold\DummyItemsBlocks\block\enum\VaultState;
 use diamondgold\DummyItemsBlocks\block\Grindstone;
@@ -41,7 +40,6 @@ use diamondgold\DummyItemsBlocks\block\SculkShrieker;
 use diamondgold\DummyItemsBlocks\block\SeaGrass;
 use diamondgold\DummyItemsBlocks\block\SnifferEgg;
 use diamondgold\DummyItemsBlocks\block\StructureBlock;
-use diamondgold\DummyItemsBlocks\block\StructureVoid;
 use diamondgold\DummyItemsBlocks\block\SuspiciousFallable;
 use diamondgold\DummyItemsBlocks\block\TrialSpawner;
 use diamondgold\DummyItemsBlocks\block\TurtleEgg;
@@ -816,27 +814,6 @@ final class BlockStateRegistration
         GlobalBlockStateHandlers::getSerializer()->map($block,
             fn(StructureBlock $block) => Writer::create($id)
                 ->writeString(BlockStateNames::STRUCTURE_BLOCK_TYPE, strtolower($block->getType()->name))
-        );
-    }
-
-    // obsolete when merged https://github.com/pmmp/PocketMine-MP/pull/6156
-    public static function StructureVoid(): void
-    {
-        $id = BlockTypeNames::STRUCTURE_VOID;
-        $block = new StructureVoid(new BlockIdentifier(BlockTypeIds::newId()), Utils::generateNameFromId($id), new BlockTypeInfo(BlockBreakInfo::indestructible()));
-        self::register($block, [$id]);
-
-        GlobalBlockStateHandlers::getDeserializer()->map($id,
-            fn(Reader $reader): StructureVoid => (clone $block)
-                ->setType(match ($reader->readString(BlockStateNames::STRUCTURE_VOID_TYPE)) {
-                    BlockStateStringValues::STRUCTURE_VOID_TYPE_VOID => StructureVoidType::VOID,
-                    BlockStateStringValues::STRUCTURE_VOID_TYPE_AIR => StructureVoidType::AIR,
-                    default => throw $reader->badValueException(BlockStateNames::STRUCTURE_VOID_TYPE, $reader->readString(BlockStateNames::STRUCTURE_VOID_TYPE))
-                })
-        );
-        GlobalBlockStateHandlers::getSerializer()->map($block,
-            fn(StructureVoid $block) => Writer::create($id)
-                ->writeString(BlockStateNames::STRUCTURE_VOID_TYPE, strtolower($block->getType()->name))
         );
     }
 
